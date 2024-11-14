@@ -36,6 +36,8 @@
     <modules>
         <module>atp</module>
         <module>atp-cdi</module>
+        <module>genai</module>
+        <module>genai-cdi</module>
         <module>metrics</module>
         <module>objectstorage</module>
         <module>objectstorage-cdi</module>
