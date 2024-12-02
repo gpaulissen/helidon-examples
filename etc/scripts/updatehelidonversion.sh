@@ -1,6 +1,6 @@
 #!/bin/bash 
 #
-# Copyright (c) 2022, 2023 Oracle and/or its affiliates.
+# Copyright (c) 2022, 2024 Oracle and/or its affiliates.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -30,6 +30,7 @@ if [ -z "${NEW_VERSION}" ]; then
 fi
 
 readonly POM_FILES=$(find . -name pom.xml -print)
+readonly GRADLE_FILES=$(find . -name build.gradle -print)
 
 for f in ${POM_FILES}; do
     pom_dir=$(dirname $f)
@@ -56,3 +57,12 @@ for f in ${POM_FILES}; do
     fi
 done
 
+# Update helidonversion property in build.gradle files
+for f in ${GRADLE_FILES}; do
+    # first make sure file has property
+    if  grep -q "helidonversion =" "$f" ; then
+        cat $f | sed -e "s#helidonversion = [a-zA-Z0-9.'-]*#helidonversion = '${NEW_VERSION}'#" > ${TMPDIR}/build.gradle
+        mv "${TMPDIR}/build.gradle" $f
+        echo "Updated helidonversion in $f with Helidon version ${NEW_VERSION}"
+    fi
+done
