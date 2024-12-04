@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2021, 2024 Oracle and/or its affiliates.
+# Copyright (c) 2024 Oracle and/or its affiliates.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -13,16 +13,25 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+
 server:
   port: 8080
-  host: "localhost"
+  host: 0.0.0.0
+  concurrency-limit:
+    # Default port uses fixed limit algorithm
+    fixed:
+      permits: 6
+      queue-length: 4
+      queue-timeout: PT10S
   sockets:
-    - name: "private"
-      port: 8081
-      host: "localhost"
-    - name: "admin"
-      port: 8082
-      host: "localhost"
-  features:
-    observe:
-      sockets: "admin"
+    - name: "aimd"
+      port: 8088
+      host: 0.0.0.0
+      concurrency-limit:
+        # Second port uses aimd limit algorithm
+        aimd:
+          min-limit: 6
+          initial-limit: 6
+          max-limit: 10
+          backoff-ratio: 0.5
+          timeout: PT3S
