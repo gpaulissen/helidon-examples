@@ -35,6 +35,7 @@ BEGIN
             msgid => message_handle);
     COMMIT;
 END;
+/
 
 -- SEND TEXT MESSAGE
 DECLARE
@@ -53,6 +54,7 @@ BEGIN
             msgid => message_handle);
     COMMIT;
 END;
+/
 
 -- SEND MAP MESSAGE
 DECLARE
@@ -76,3 +78,4 @@ BEGIN
             msgid => message_handle);
     COMMIT;
 END;
+/

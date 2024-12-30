@@ -74,7 +74,7 @@ class MessagingIT {
     @BeforeAll
     static void init() {
         ConfigProviderResolver cr = ConfigProviderResolver.instance();
-        String url = "jdbc:oracle:thin:@localhost:" + oracle.getMappedPort(1521) + ":XE";
+        String url = "jdbc:oracle:thin:@//localhost:" + oracle.getMappedPort(1521) + "/freepdb1";
         Config c = cr.getBuilder()
                 .addDefaultSources()
                 .addDiscoveredSources()
